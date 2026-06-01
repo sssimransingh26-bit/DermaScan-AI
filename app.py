@@ -9,6 +9,7 @@ app=Flask(__name__)
 
 UPLOAD_FOLDER='uploads'
 app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # 5MB max
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route('/')
@@ -41,7 +42,7 @@ def predict():
         condition = result['condition']
         info = DISEASE_INFO.get(condition, {})
 
-        return jsonify({
+        response = jsonify({
             'condition': condition,
             'confidence': result['confidence'],
             'description': info.get('description', ''),
@@ -51,7 +52,15 @@ def predict():
             'consult_when': info.get('consult_when', ''),
             'disclaimer': 'This is not a medical diagnosis. Please consult a certified dermatologist.'
         })
+        
+        # Clean up uploaded file
+        os.remove(filepath)
+        return response
+        
     except Exception as e :
+        # Clean up file on error too
+        if os.path.exists(filepath):
+            os.remove(filepath)
         return jsonify({'error':str(e)})
 
     
