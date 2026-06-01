@@ -9,6 +9,7 @@ app=Flask(__name__)
 
 UPLOAD_FOLDER='uploads'
 app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route('/')
 def home():
@@ -25,6 +26,7 @@ def predict():
         return jsonify({'error':'no file selected'})
     
     #save uploaded image
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
     filepath=os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(file.filename))
     file.save(filepath)
 
@@ -34,20 +36,23 @@ def predict():
         return jsonify({'error': quality_message})
 
     #run prediction
-    result=run_pre(filepath)
-    condition = result['condition']
-    info = DISEASE_INFO.get(condition, {})
+    try:
+        result=run_pre(filepath)
+        condition = result['condition']
+        info = DISEASE_INFO.get(condition, {})
 
-    return jsonify({
-        'condition': condition,
-        'confidence': result['confidence'],
-        'description': info.get('description', ''),
-        'severity': info.get('severity', ''),
-        'symptoms': info.get('symptoms', []),
-        'precautions': info.get('precautions', []),
-        'consult_when': info.get('consult_when', ''),
-        'disclaimer': 'This is not a medical diagnosis. Please consult a certified dermatologist.'
-    })
+        return jsonify({
+            'condition': condition,
+            'confidence': result['confidence'],
+            'description': info.get('description', ''),
+            'severity': info.get('severity', ''),
+            'symptoms': info.get('symptoms', []),
+            'precautions': info.get('precautions', []),
+            'consult_when': info.get('consult_when', ''),
+            'disclaimer': 'This is not a medical diagnosis. Please consult a certified dermatologist.'
+        })
+    except Exception as e :
+        return jsonify({'error':str(e)})
 
     
 if __name__=='__main__':
