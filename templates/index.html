@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermaScan AI </title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <nav class="navbar">
+            <div class="nav-logo">DermaScan AI</div>
+            <button class="toggle-btn" onclick="toggleMode()"> Light Mode</button>
+        </nav>
+
+
+    <div class="main-layout">
+    <div class="left-panel">
+        <div class="upload-box" id="uploadBox">
+            <img id="preview" src="" alt="Preview" style="display:none;" />
+            <div id="uploadPrompt">
+                <p>Click to upload or drag & drop</p>
+                <p class="small">Supports JPG, PNG</p>
+            </div>
+            <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)" />
+        </div>
+
+        <button id="analyzeBtn" onclick="uploadImage()">Analyze Image</button>  
+         <div class="loader" id="loader" style="display:none;">
+            <div class="spinner"></div>
+            <p>Analyzing your image...</p>
+        </div>
+    </div>
+    <div class="right-panel">
+        <div class="placeholder-box" id="placeholderBox">
+            <p>Your analysis results will appear here</p>
+        </div>
+
+        <div class="result-box" id="resultBox" style="display:none;">
+            <h2>Analysis Result</h2>
+            <p class="condition" id="conditionText"></p>
+
+            <div class="confidence-bar">
+                <div class="confidence-fill" id="confidenceFill"></div>
+            </div>
+            <p class="confidence-label" id="confidenceLabel"></p>
+
+            <div class="severity-badge" id="severityBadge"></div>
+
+            <div class="info-section">
+                <h3> About this Condition</h3>
+                <p id="descriptionText"></p>
+            </div>
+
+            <div class="info-section">
+                <h3> Symptoms</h3>
+                <ul id="symptomsList"></ul>
+            </div>
+
+            <div class="info-section">
+                <h3> Precautions</h3>
+                <ul id="precautionsList"></ul>
+            </div>
+
+            <div class="info-section consult-box">
+                <h3> When to Consult a Doctor</h3>
+                <p id="consultText"></p>
+            </div>
+
+            <div class="disclaimer">
+                This is not a medical diagnosis. Please consult a certified dermatologist.
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
