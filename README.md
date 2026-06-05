@@ -4,9 +4,6 @@ using EfficientNet-B0 + Flask.
 
 > Not a medical diagnosis. Always consult a dermatologist.
 
-## Demo
-![Demo](assets/demo.png)
-
 ## What it does
 - Classifies 7 skin conditions with confidence score
 - Rejects poor quality images before inference
