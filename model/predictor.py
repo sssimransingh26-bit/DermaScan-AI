@@ -1,4 +1,5 @@
 import torch
+import os
 torch.set_num_threads(1)
 from torchvision import transforms
 from PIL import Image
@@ -17,7 +18,9 @@ LABELS=['Melanocytic nevi',
 
 #loading pre trained model
 def load_model():
-    model=timm.create_model('efficientnet_b0',pretrained=True, num_classes=7)
+    model=timm.create_model('efficientnet_b0',pretrained=False, num_classes=7)
+    model_path = os.path.join(os.path.dirname(__file__), 'best_model.pth')
+    model.load_state_dict(torch.load(model_path, map_location='cpu'))
     model.eval()
     return model
 
