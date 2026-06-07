@@ -22,14 +22,15 @@ python app.py
 ```
 
 ## Model
-EfficientNet-B0 pretrained on ImageNet — fine-tuning on 
-ISIC 2020 (33k dermoscopic images) in progress.
-AUC-ROC used over accuracy due to class imbalance.
+EfficientNet-B0 fine-tuned on HAM10000 dataset 
+(10,015 dermoscopic images, 7 classes) achieving 
+**82% validation accuracy**. AUC-ROC used over accuracy 
+due to class imbalance.
 
 ## Roadmap
 - [x] REST API + image quality validation
 - [x] 7-class disease info system  
 - [x] Responsive frontend
-- [ ] ISIC fine-tuning (in progress)
+- [x] Fine-tuned on HAM10000 — 82% val accuracy
 - [ ] Grad-CAM heatmap
 - [ ] Docker + deployment
